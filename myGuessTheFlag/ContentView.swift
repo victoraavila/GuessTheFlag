@@ -18,6 +18,24 @@ struct ContentView: View {
     @State private var questionsAsked = 0
     @State private var showingGameOver = false
     
+    // VoiceOver/Accessibility notes
+    // SwiftUI VoiceOver's default behaviour is to read out the name of each image as its labels, destroying the gameplay
+    // To fix this, we will add descriptions to each flag with just enough detail they can be guessed correctly by someone (without the name of the country)
+    // Making a dictionary with all the countries as keys and all labels as the values
+    let labels = [
+        "Estonia": "Flag with three horizontal stripes. Top stripe blue, middle stripe black, bottom stripe white.",
+        "France": "Flag with three vertical stripes. Left stripe blue, middle stripe white, right stripe red.",
+        "Germany": "Flag with three horizontal stripes. Top stripe black, middle stripe red, bottom stripe gold.",
+        "Ireland": "Flag with three vertical stripes. Left stripe green, middle stripe white, right stripe orange.",
+        "Italy": "Flag with three vertical stripes. Left stripe green, middle stripe white, right stripe red.",
+        "Nigeria": "Flag with three vertical stripes. Left stripe green, middle stripe white, right stripe green.",
+        "Poland": "Flag with two horizontal stripes. Top stripe white, bottom stripe red.",
+        "Spain": "Flag with three horizontal stripes. Top thin stripe red, middle thick stripe is gold with crest on the left, bottom thin stripe red.",
+        "UK": "Flag with overlapping red and white crosses, both straight and diagonally, on a blue background.",
+        "Ukraine": "Flag with two horizontal stripes. Top stripe blue, bottom stripe yellow.",
+        "US": "Flag with many red and white stripes, with white stars on a blue background in the top-left corner."
+    ]
+    
     var body: some View {
         // Two labels telling the user what to do,
         // And three images telling the user the world flags
@@ -61,6 +79,10 @@ struct ContentView: View {
                             // We will use a shadow the stand up the flag against the background
                                 .shadow(radius: 5)
                         }
+                        // Accessibility Label for the Button
+                        // Looking up the name of the country and use that name as the key in our labels array
+                        // If the key is missing, provide a default string (this is mandatory)
+                        .accessibilityLabel(labels[countries[number], default: "Unknown flag"])
                     }
                 }
                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
